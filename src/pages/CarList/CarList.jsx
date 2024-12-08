@@ -31,7 +31,6 @@ function CarList() {
             key={carro.id} 
             className={`car-card ${!carro.disponivel ? 'indisponivel' : ''}`}
           >
-            <img src={carro.imagem} alt={`${carro.marca} ${carro.modelo}`} />
             <div className="car-info">
               <h2>{carro.marca} {carro.modelo}</h2>
               <p>Ano: {carro.ano_fabricacao}</p>

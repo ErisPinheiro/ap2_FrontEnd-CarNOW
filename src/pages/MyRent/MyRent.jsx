@@ -22,47 +22,56 @@ function MyRent() {
   // Carregar empréstimos do servidor
   useEffect(() => {
     if (!clienteId) return;
-
-    axios
-      .get(`http://localhost:3000/listarEmprestimoID?cliente_id=${clienteId}`)
-      .then((response) => {
-        const emprestimos = response.data.data;
-
-        // Restaurar o estado de devolução a partir do localStorage
-        const devolvidos = JSON.parse(localStorage.getItem('devolvidos')) || {};
-        const emprestimosAtualizados = emprestimos.map((emprestimo) => ({
+    
+    const fetchEmprestimos = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/listarEmprestimoID?cliente_id=${clienteId}`);
+        const emprestimosData = response.data.data;
+        
+        // Recuperar estado de devolução do localStorage
+        const devolvidos = JSON.parse(localStorage.getItem(`devolvidos_${clienteId}`)) || {};
+        
+        const emprestimosAtualizados = emprestimosData.map(emprestimo => ({
           ...emprestimo,
-          devolvido: devolvidos[emprestimo.id] || emprestimo.devolvido,
+          devolvido: devolvidos[emprestimo.id] || emprestimo.devolvido
         }));
 
         setEmprestimos(emprestimosAtualizados);
         setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Erro ao buscar os empréstimos:', error);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchEmprestimos();
   }, [clienteId]);
 
   // Devolver carro
-  const devolverCarro = (emprestimoId, veiculoId) => {
-    axios
-      .put(`http://localhost:3000/devolverCarro`, { emprestimo_id: emprestimoId, veiculo_id: veiculoId })
-      .then((response) => {
-        console.log('Carro devolvido:', response.data);
-
-        // Atualizar estado local
-        setEmprestimos((prevEmprestimos) =>
-          prevEmprestimos.map((emprestimo) =>
-            emprestimo.id === emprestimoId
-              ? { ...emprestimo, devolvido: true }
-              : emprestimo
-          )
-        );
-      })
-      .catch((error) => {
-        console.error('Erro ao devolver o carro:', error);
+  const devolverCarro = async (emprestimoId, veiculoId) => {
+    try {
+      await axios.put(`http://localhost:3000/devolverCarro`, {
+        emprestimo_id: emprestimoId,
+        veiculo_id: veiculoId
       });
+
+      // Atualizar estado local
+      const novosEmprestimos = emprestimos.map(emprestimo =>
+        emprestimo.id === emprestimoId
+          ? { ...emprestimo, devolvido: true }
+          : emprestimo
+      );
+      setEmprestimos(novosEmprestimos);
+
+      // Atualizar localStorage
+      const devolvidos = JSON.parse(localStorage.getItem(`devolvidos_${clienteId}`)) || {};
+      devolvidos[emprestimoId] = true;
+      localStorage.setItem(`devolvidos_${clienteId}`, JSON.stringify(devolvidos));
+
+    } catch (error) {
+      console.error('Erro ao devolver o carro:', error);
+      alert('Erro ao devolver o carro. Tente novamente.');
+    }
   };
 
   if (loading) {
@@ -77,7 +86,7 @@ function MyRent() {
       ) : (
         <div className="rent-list">
           {emprestimos
-            .sort((a, b) => b.id - a.id) // Ordenação decrescente pelo ID
+            .sort((a, b) => b.id - a.id)
             .map((emprestimo) => (
               <div
                 key={emprestimo.id}

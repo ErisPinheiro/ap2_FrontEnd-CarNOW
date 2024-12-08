@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './AddCar.css';
+import { useNavigate } from 'react-router-dom';
 
 
 function AddCar() {
@@ -9,6 +10,7 @@ function AddCar() {
   const [anoFabricacao, setAnoFabricacao] = useState('');
   const [valorDiaria, setValorDiaria] = useState('');
   const [placa, setPlaca] = useState('');
+  const navigate = useNavigate();
 
   const validarPlaca = (placa) => {
     const regexPlaca = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/; // Regex para formato AAA0A00
@@ -32,6 +34,7 @@ function AddCar() {
         valor_diaria: valorDiaria,
         placa: placa.toUpperCase(),
       });
+      navigate('/carros')
       alert(response.data.message);
 
     } catch (error) {

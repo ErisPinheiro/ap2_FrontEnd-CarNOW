@@ -12,6 +12,7 @@ function RentList() {
     try {
       const response = await axios.get(`http://localhost:3000/admin/listarEmprestimosCliente/${clienteId}`);
       setEmprestimos(response.data.emprestimos);
+      console.log(response.data.emprestimos)
     } catch (error) {
       console.error('Erro ao buscar empréstimos:', error);
       alert('Erro ao buscar empréstimos');
