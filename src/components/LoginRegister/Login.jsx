@@ -31,11 +31,8 @@ function Login() {
         // Salva os dados do usuário no localStorage
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('user', JSON.stringify(data.user));
-
         // Dispara um evento para notificar outros componentes
         window.dispatchEvent(new Event('Login'));
-
-        // Redireciona para a página inicial
         navigate('/');
       }
     } catch (err) {
@@ -43,7 +40,6 @@ function Login() {
         // Quando há uma resposta de erro do servidor
         setError(err.response.data.error || 'Erro ao fazer login');
       } else {
-        // Quando há erro de rede ou outro erro inesperado
         setError('Erro ao fazer login. Tente novamente.');
       }
       console.error('Login error:', err);
@@ -54,7 +50,6 @@ function Login() {
     <div className="auth-container">
       <div className="auth-form">
         <h2>Login</h2>
-        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -76,6 +71,7 @@ function Login() {
               required
             />
           </div>
+          {error && <div className="error-message">{error}</div>}
           <button type="submit" className="auth-button">Entrar</button>
           <p className="auth-switch">
             Não tem uma conta? <Link to="/registro">Registre-se</Link>

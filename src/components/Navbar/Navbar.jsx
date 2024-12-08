@@ -5,43 +5,36 @@ import './Navbar.css';
 function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userName, setUserName] = useState('');
-    const [isAdmin, setIsAdmin] = useState(false); // Verifica se o usuário é admin
+    const [isAdmin, setIsAdmin] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Verifica o estado de login no localStorage ao montar o componente
-        const isUserLoggedIn = localStorage.getItem('isLoggedIn');
-        const user = localStorage.getItem('user');
+        const checkLoginStatus = () => {
+            const isUserLoggedIn = localStorage.getItem('isLoggedIn');
+            const user = localStorage.getItem('user');
 
-        if (isUserLoggedIn === 'true' && user) {
-            setIsLoggedIn(true);
-            const parsedUser = JSON.parse(user);
-            if (parsedUser && parsedUser.nome) {
-                setUserName(parsedUser.nome);
+            if (isUserLoggedIn === 'true' && user) {
+                setIsLoggedIn(true);
+                const parsedUser = JSON.parse(user);
+                if (parsedUser && parsedUser.nome) {
+                    setUserName(parsedUser.nome);
+                }
+                if (parsedUser && parsedUser.nome === 'Admin') {
+                    setIsAdmin(true);
+                }
             }
-            // Verifica se o usuário é admin
-            if (parsedUser && parsedUser.nome === 'Admin') {
-                setIsAdmin(true);
-            }
-        }
+        };
 
-        // Atualiza o estado quando o evento "Login" é disparado
+
+        checkLoginStatus();
+        
         const handleLoginEvent = () => {
-            setIsLoggedIn(true);
-            const loggedInUser = JSON.parse(localStorage.getItem('user'));
-            if (loggedInUser && loggedInUser.nome) {
-                setUserName(loggedInUser.nome);
-            }
-            // Verifica se o usuário é admin
-            if (loggedInUser && loggedInUser.tipo === 'admin') {
-                setIsAdmin(true);
-            }
+            checkLoginStatus();
         };
 
         window.addEventListener('Login', handleLoginEvent);
 
         return () => {
-            // Limpa o listener ao desmontar o componente
             window.removeEventListener('Login', handleLoginEvent);
         };
     }, []);
@@ -51,7 +44,7 @@ function Navbar() {
         localStorage.removeItem('user');
         setIsLoggedIn(false);
         setUserName('');
-        setIsAdmin(false); // Limpa a variável isAdmin
+        setIsAdmin(false);
         navigate('/login');
     };
 

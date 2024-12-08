@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import './RentList.css';
 
 function RentList() {
   const [clienteId, setClienteId] = useState('');
@@ -18,8 +19,8 @@ function RentList() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="rent-list-container">
+      <form className="rent-list-form" onSubmit={handleSubmit}>
         <input
           type="text"
           value={clienteId}
@@ -30,7 +31,7 @@ function RentList() {
         <button type="submit">Listar Empréstimos</button>
       </form>
 
-      <div>
+      <div className="rent-list-results">
         {emprestimos.length > 0 ? (
           <ul>
             {emprestimos.map((emprestimo) => (

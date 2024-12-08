@@ -1,0 +1,63 @@
+  .rent-list-container {
+    
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rent-list-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .rent-list-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--text-color);
+  }
+  
+  .rent-list-form button {
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rent-list-form button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  .rent-list-results {
+    margin-top: 20px;
+  }
+  
+  .rent-list-results ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .rent-list-results li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    color: var(--text-color);
+  }
+  
+  .rent-list-results li:last-child {
+    border-bottom: none;
+  }
+  
+  .rent-list-results p {
+    text-align: center;
+    color: var(--text-color);
+  }
+  
