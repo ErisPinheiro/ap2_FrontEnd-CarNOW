@@ -20,7 +20,7 @@ function Navbar() {
                 setUserName(parsedUser.nome);
             }
             // Verifica se o usuário é admin
-            if (parsedUser && (parsedUser.name === 'Admin')) {
+            if (parsedUser && parsedUser.nome === 'Admin') {
                 setIsAdmin(true);
             }
         }
