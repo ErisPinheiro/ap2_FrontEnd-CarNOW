@@ -5,6 +5,7 @@ import './Navbar.css';
 function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userName, setUserName] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false); // Verifica se o usuário é admin
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -18,6 +19,10 @@ function Navbar() {
             if (parsedUser && parsedUser.nome) {
                 setUserName(parsedUser.nome);
             }
+            // Verifica se o usuário é admin
+            if (parsedUser && (parsedUser.name === 'Admin')) {
+                setIsAdmin(true);
+            }
         }
 
         // Atualiza o estado quando o evento "Login" é disparado
@@ -26,6 +31,10 @@ function Navbar() {
             const loggedInUser = JSON.parse(localStorage.getItem('user'));
             if (loggedInUser && loggedInUser.nome) {
                 setUserName(loggedInUser.nome);
+            }
+            // Verifica se o usuário é admin
+            if (loggedInUser && loggedInUser.tipo === 'admin') {
+                setIsAdmin(true);
             }
         };
 
@@ -42,6 +51,7 @@ function Navbar() {
         localStorage.removeItem('user');
         setIsLoggedIn(false);
         setUserName('');
+        setIsAdmin(false); // Limpa a variável isAdmin
         navigate('/login');
     };
 
@@ -53,6 +63,12 @@ function Navbar() {
             <ul className="navbar-menu">
                 <li><Link to="/">Início</Link></li>
                 <li><Link to="/carros">Carros</Link></li>
+                {isAdmin && (
+                    <>
+                        <li><Link to="/adicionar-carro">Adicionar Carro</Link></li>
+                        <li><Link to="/listar-emprestimos">Listar Empréstimos</Link></li>
+                    </>
+                )}
                 {isLoggedIn && (
                     <>
                         <li><Link to="/aluguel">Novo Empréstimo</Link></li>
