@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-import './AddCar.css'; 
+import './AddCar.css';
+
 
 function AddCar() {
   const [modelo, setModelo] = useState('');
@@ -9,17 +10,30 @@ function AddCar() {
   const [valorDiaria, setValorDiaria] = useState('');
   const [placa, setPlaca] = useState('');
 
+  const validarPlaca = (placa) => {
+    const regexPlaca = /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/; // Regex para formato AAA0A00
+    return regexPlaca.test(placa.toUpperCase());
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validar a placa antes do envio
+    if (!validarPlaca(placa)) {
+      alert('A placa deve estar no formato AAA0A00 (padrão Mercosul).');
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:3000/admin/adicionarVeiculo', {
         modelo,
         marca,
         ano_fabricacao: anoFabricacao,
         valor_diaria: valorDiaria,
-        placa,
+        placa: placa.toUpperCase(),
       });
       alert(response.data.message);
+
     } catch (error) {
       console.error('Erro ao adicionar carro:', error);
       alert('Erro ao adicionar carro');
@@ -76,7 +90,7 @@ function AddCar() {
             type="text"
             value={placa}
             onChange={(e) => setPlaca(e.target.value)}
-            placeholder="Placa"
+            placeholder="Formato: AAA0A00"
             required
           />
         </div>

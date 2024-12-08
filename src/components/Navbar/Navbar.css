@@ -1,9 +1,18 @@
+:root {
+  --primary-color: #0BBF64;
+  --secondary-color: #35c700;
+  --background-color: #ffffff51;
+  --navbar-color: #96939324;
+  --text-color: #333;
+}
+
 .navbar {
   color: rgba(255, 255, 255, 0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px;
+  background-color: var(--navbar-color);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona a sombra */
 }
 
@@ -30,7 +39,8 @@
   }
 
   .navbar span {
-    color: var(--secondary-color)
+    color: var(--secondary-color);
+    font-weight: bold;
   }
 
   .logout-button {
@@ -46,7 +56,8 @@
 
 .logout-button:hover {
     background-color: var(--secondary-color);
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(11, 191, 100, 0.3);
 }
 
 .logout-button:active {

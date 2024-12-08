@@ -42,18 +42,20 @@
 }
 
 .devolver-btn {
-  background-color: #3498db;
+  background-color: var(--secondary-color);
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   margin-top: 10px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .devolver-btn:hover {
-  background-color: #2980b9;
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(17, 110, 19, 0.3);
 }
 
 .devolvido-msg {
