@@ -13,14 +13,14 @@ function RentList() {
     const fetchClientes = async () => {
       try {
         const response = await axios.get('http://localhost:3000/admin/listarClientes');
-        setClientes(response.data.clientes); // Salva a lista de clientes
-        console.log("Clientes recebidos:", response.data.clientes);
+        const flatClientes = response.data.clientes.flat();
+        setClientes(flatClientes); // Salva a lista de clientes
+        console.log("Clientes recebidos:", flatClientes);
       } catch (error) {
         console.error('Erro ao buscar clientes:', error);
         alert('Erro ao buscar clientes');
       }
     };
-
     fetchClientes();
   }, []); // Executa apenas uma vez ao montar o componente
 
@@ -35,11 +35,15 @@ function RentList() {
     try {
       // Chama a rota para listar os empréstimos do cliente
       const response = await axios.get(`http://localhost:3000/admin/listarEmprestimosCliente/${clienteId}`);
-      
+      console.log("Empréstimos recebidos:", response.data.emprestimos);
+
       if (response.data.emprestimos.length > 0) {
+        // Filtra os empréstimos com IDs válidos
+        const validEmprestimos = response.data.emprestimos.flat().filter(emprestimo => emprestimo.id);
+
         // Atualiza a lista de empréstimos
-        setEmprestimos(response.data.emprestimos);
-        
+        setEmprestimos(validEmprestimos);
+
         // Atualiza o nome do cliente
         setNomeCliente(response.data.nome_cliente);
       } else {
@@ -53,6 +57,7 @@ function RentList() {
   };
 
   console.log('Clientes no estado:', clientes);
+  console.log('Empréstimos no estado:', emprestimos);
 
   return (
     <div className="rent-list-container">
@@ -66,11 +71,13 @@ function RentList() {
         >
           <option value="">Selecione um Cliente</option>
           {clientes.length > 0 ? (
-            clientes.map((cliente) => (
-              <option key={cliente.id} value={cliente.id}>
-                {cliente.nome}
-              </option>
-            ))
+            clientes
+              .filter(cliente => cliente.id) // Filtra apenas clientes válidos
+              .map((cliente) => (
+                <option key={cliente.id} value={cliente.id}>
+                  {cliente.nome}
+                </option>
+              ))
           ) : (
             <option value="">Nenhum cliente encontrado</option>
           )}

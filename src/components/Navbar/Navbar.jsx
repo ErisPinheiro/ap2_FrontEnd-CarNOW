@@ -56,7 +56,6 @@ function Navbar() {
                 <img src="/DriveNOW.png" alt="logo" />
             </div>
             <ul className="navbar-menu">
-                <li><Link to="/">Início</Link></li>
                 <li><Link to="/carros">Carros</Link></li>
                 {isAdmin && (
                     <>
