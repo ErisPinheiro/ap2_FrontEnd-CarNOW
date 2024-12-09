@@ -50,7 +50,9 @@ function Navbar() {
 
     return (
         <nav className="navbar">
-            <div className="navbar-logo">
+            <div className="navbar-logo"
+                 onClick={() => navigate('/')}
+            >
                 <img src="/DriveNOW.png" alt="logo" />
             </div>
             <ul className="navbar-menu">

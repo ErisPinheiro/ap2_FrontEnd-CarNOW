@@ -20,6 +20,7 @@
     width: 10rem;
     height: 5rem;
     object-fit: contain;
+    cursor: pointer;
   }
   
   .navbar-menu {
