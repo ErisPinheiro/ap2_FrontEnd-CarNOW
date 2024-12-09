@@ -52,6 +52,8 @@ function RentList() {
     }
   };
 
+  console.log('Clientes no estado:', clientes);
+
   return (
     <div className="rent-list-container">
       <form className="rent-list-form" onSubmit={handleSubmit}>
@@ -63,7 +65,7 @@ function RentList() {
           required
         >
           <option value="">Selecione um Cliente</option>
-          {clientes && clientes.length > 0 ? (
+          {clientes.length > 0 ? (
             clientes.map((cliente) => (
               <option key={cliente.id} value={cliente.id}>
                 {cliente.nome}

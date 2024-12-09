@@ -57,10 +57,10 @@ function RentForm() {
       const dataFim = new Date(formData.dataDevolucao);
 
       if (dataInicio >= dataFim) {
-        setIsDateValid(false); // Datas inválidas
+        setIsDateValid(false); 
         return 0;
       } else {
-        setIsDateValid(true); // Datas válidas
+        setIsDateValid(true); 
       }
 
       const dias = Math.ceil((dataFim - dataInicio) / (1000 * 60 * 60 * 24)); // Calcula a diferença em dias
