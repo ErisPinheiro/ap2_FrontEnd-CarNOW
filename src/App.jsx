@@ -10,6 +10,7 @@ import './index.css';
 import Home from './pages/Home/Home';
 import AddCar from './pages/AddCar/AddCar';
 import RentList from './pages/RentList/RentList';
+import EditCar from './pages/AddCar/EditCar';
 
 function App() {
   const router = createBrowserRouter([
@@ -24,6 +25,7 @@ function App() {
         { path: ROUTES.REGISTRO, element: <Register /> },
         { path: ROUTES.ADICIONARCARRO, element: <AddCar /> },
         { path: ROUTES.LISTAREMPRESTIMOS, element: <RentList /> },
+        { path: ROUTES.EDITARCARRO, element: <EditCar /> },
 
       ],
     },

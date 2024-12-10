@@ -6,5 +6,6 @@ export const ROUTES = {
   LOGIN: '/login',
   REGISTRO: '/registro',
   ADICIONARCARRO: '/adicionar-carro',
+  EDITARCARRO: '/editarCarro/:id',
   LISTAREMPRESTIMOS: '/listar-emprestimos'
 };

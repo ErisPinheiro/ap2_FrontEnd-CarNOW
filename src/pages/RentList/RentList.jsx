@@ -15,7 +15,6 @@ function RentList() {
         const response = await axios.get('http://localhost:3000/admin/listarClientes');
         const flatClientes = response.data.clientes.flat();
         setClientes(flatClientes); // Salva a lista de clientes
-        console.log("Clientes recebidos:", flatClientes);
       } catch (error) {
         console.error('Erro ao buscar clientes:', error);
         alert('Erro ao buscar clientes');
@@ -55,9 +54,6 @@ function RentList() {
       alert('Erro ao buscar empréstimos');
     }
   };
-
-  console.log('Clientes no estado:', clientes);
-  console.log('Empréstimos no estado:', emprestimos);
 
   return (
     <div className="rent-list-container">
