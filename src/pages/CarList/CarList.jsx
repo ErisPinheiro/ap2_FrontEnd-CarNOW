@@ -6,10 +6,12 @@ import './CarList.css';
 function CarList() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchCars();
+    checkAdminStatus(); 
   }, []);
 
   const fetchCars = () => {
@@ -25,6 +27,16 @@ function CarList() {
       });
   };
 
+  const checkAdminStatus = () => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      if (parsedUser && parsedUser.nome === 'Admin') {
+        setIsAdmin(true);
+      }
+    }
+  };
+
   const handleDelete = async (id) => {
     try {
         await axios.delete(`http://localhost:3000/admin/deletarVeiculo/${id}`);
@@ -34,7 +46,7 @@ function CarList() {
         console.error('Erro ao excluir o carro:', error);
         alert('Erro ao excluir o carro');
     }
-};
+  };
 
   const handleEdit = (id) => {
     navigate(`/editarCarro/${id}`); // Navega para a página de edição
@@ -58,20 +70,28 @@ function CarList() {
               <p>Ano: {carro.ano_fabricacao}</p>
               <p>Valor diária: R$ {carro.valor_diaria},00</p>
               <p>Placa: {carro.placa}</p>
-              <div className="button-group">
-                <button 
-                  className="btn-editar"
-                  onClick={() => handleEdit(carro.id)}
-                >
-                  Editar
-                </button>
-                <button 
-                  className="btn-excluir"
-                  onClick={() => handleDelete(carro.id)}
-                >
-                  Excluir
-                </button>
-              </div>
+
+              {/* Indicação de disponibilidade */}
+              <p className={`car-status ${carro.disponivel ? 'disponivel' : 'indisponivel'}`}>
+                {carro.disponivel ? 'Disponível' : 'Indisponível'}
+              </p>
+
+              {isAdmin && ( // Exibe os botões de editar e excluir apenas se o usuário for admin
+                <div className="button-group">
+                  <button 
+                    className="btn-control"
+                    onClick={() => handleEdit(carro.id)}
+                  >
+                    Editar
+                  </button>
+                  <button 
+                    className="btn-control"
+                    onClick={() => handleDelete(carro.id)}
+                  >
+                    Excluir
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ))}
