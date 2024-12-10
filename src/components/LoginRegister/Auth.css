@@ -68,9 +68,9 @@
     font-weight: bold;
   }
   
-  .error-message {
+  .auth-form .error-message {
     background-color: white;
-    color: red;
+    color: red; /* Garantindo que a cor seja vermelha */
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 1rem;
