@@ -19,7 +19,7 @@ function Navbar() {
                 if (parsedUser && parsedUser.nome) {
                     setUserName(parsedUser.nome);
                 }
-                if (parsedUser && parsedUser.nome === 'Admin' && parsedUser.id === 60) {
+                if (parsedUser && parsedUser.nome === 'Admin' && parsedUser.id === 1) {
                     setIsAdmin(true);
                 }
             }
