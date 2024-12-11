@@ -15,6 +15,7 @@ function RentForm() {
   const [isDateValid, setIsDateValid] = useState(true); // Rastreia a validade das datas
 
   useEffect(() => {
+    
     // Pega o clienteId do localStorage
     const clienteId = JSON.parse(localStorage.getItem('user'))?.id;
     setFormData((prev) => ({ ...prev, clienteId }));
@@ -88,7 +89,6 @@ function RentForm() {
         data_devolucao: formData.dataDevolucao,
         valor_emprestimo: formData.valorEmprestimo,
       });
-      console.log(formData);
 
       // Atualizar o veículo para indisponível
       const veiculoId = formData.veiculoId;

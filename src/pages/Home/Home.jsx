@@ -29,9 +29,9 @@ const Home = () => {
 
     const handleButtonClick = () => {
         if (isLoggedIn) {
-            navigate('/aluguel'); // Redireciona para a página de aluguel
+            navigate('/aluguel');
         } else {
-            navigate('/login'); // Redireciona para a página de login
+            navigate('/login'); 
         }
     };
 
@@ -39,7 +39,7 @@ const Home = () => {
         <div className="home-page">
             <div className="content">
                 <div>
-                    <h1 className="hero-title">Seja bem-vindo a CarNOW, veja as Ofertas disponíveis!</h1>
+                    <h1 className="hero-title">Seja bem-vindo a DriveNOW, veja as Ofertas disponíveis!</h1>
                     <p className="hero-subtitle">
                         Aluguel de veículos com segurança. Tecnologia de ponta, processo 100% digital, liberdade total em suas mãos.
                     </p>

@@ -9,6 +9,7 @@ function RentList() {
   const [emprestimos, setEmprestimos] = useState([]); // Lista de empréstimos
 
   useEffect(() => {
+    
     // Função para buscar clientes ao carregar o componente
     const fetchClientes = async () => {
       try {
